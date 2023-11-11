@@ -57,6 +57,14 @@ class User(AbstractUser):
     is_client = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        if self.is_staff and self.is_active:
+            return f'{self.phone} --- employee'
+        if self.is_client and self.is_active:
+            return f'{self.phone} --- client'
+        if self.is_superuser:
+            return self.phone
+
     USERNAME_FIELD = 'phone'
     objects = CustomUserManager()
 
